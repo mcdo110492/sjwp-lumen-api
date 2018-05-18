@@ -17,7 +17,7 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $new = Carbon::now();
+        $now = Carbon::now();
 
         $users = [
             ['username' => 'superadmin', 'password' => Hash::make('superadmin'), 'role' => 1, 'created_at' => $now, 'updated_at' => $now],
