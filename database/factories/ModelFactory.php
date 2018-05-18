@@ -11,9 +11,17 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+use Carbon\Carbon;
+
+$factory->define(App\Ministers::class, function (Faker\Generator $faker) {
+
+    $now = Carbon::now();
+
     return [
+        'id' => 1,
         'name' => $faker->name,
-        'email' => $faker->email,
+        'active' => 0,
+        'created_at' => $now,
+        'updated_at' => $now
     ];
 });
