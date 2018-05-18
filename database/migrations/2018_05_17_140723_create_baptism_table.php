@@ -20,7 +20,6 @@ class CreateBaptismTable extends Migration
             $table->unsignedInteger('book')->nullable();
             $table->unsignedInteger('page')->nullable();
             $table->unsignedInteger('entry')->nullable();
-            $table->string('remark',150)->nullable();
             $table->unsignedInteger('minister_id');
             $table->timestamps();
 

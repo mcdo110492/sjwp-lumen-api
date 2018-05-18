@@ -22,7 +22,6 @@ class CreateDeathTable extends Migration
             $table->unsignedInteger('book')->nullable();
             $table->unsignedInteger('page')->nullable();
             $table->unsignedInteger('entry')->nullable();
-            $table->string('remarks',150)->nullable();
             $table->unsignedInteger('minister_id');
             $table->timestamps();
 

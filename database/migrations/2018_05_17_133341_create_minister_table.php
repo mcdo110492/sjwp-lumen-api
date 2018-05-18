@@ -16,6 +16,7 @@ class CreateMinisterTable extends Migration
         Schema::create('minister', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',50);
+            $table->unsignedInteger('active')->default(0);
             $table->timestamps();
         });
     }

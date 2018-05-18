@@ -21,7 +21,6 @@ class CreateConfirmationTable extends Migration
             $table->unsignedInteger('page')->nullable();
             $table->string('baptizedAt',50)->nullable();
             $table->date('baptismDate')->nullable();
-            $table->string('remarks',150)->nullable();
             $table->unsignedInteger('minister_id');
             $table->timestamps();
 
