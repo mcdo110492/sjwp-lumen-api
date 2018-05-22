@@ -15,16 +15,19 @@ class CreateConfirmationTable extends Migration
     {
         Schema::create('confirmation', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('profile_id');
+            $table->string('firstName',50);
+            $table->string('middleName',50);
+            $table->string('lastName',50);
+            $table->string('nameExt',50)->nullable();
             $table->date('confirmationDate')->nullable();
+            $table->date('baptismDate')->nullable();
+            $table->string('baptizedAt',50)->nullable();
             $table->unsignedInteger('book')->nullable();
             $table->unsignedInteger('page')->nullable();
-            $table->string('baptizedAt',50)->nullable();
-            $table->date('baptismDate')->nullable();
             $table->unsignedInteger('minister_id');
             $table->timestamps();
 
-            $table->index(['profile_id','minister_id']);
+            $table->index('minister_id');
         });
     }
 

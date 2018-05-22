@@ -21,3 +21,5 @@ $router->get('/ministers','MinistersController@index');
 $router->post('/ministers','MinistersController@store');
 
 $router->put('/ministers/{id}','MinistersController@update');
+
+$router->post('/product/category', 'ProductCategoriesController@store');

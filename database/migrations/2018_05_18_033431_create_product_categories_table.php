@@ -17,8 +17,8 @@ class CreateProductCategoriesTable extends Migration
             $table->increments('id');
             $table->uuid('uuid');
             $table->string('name',50);
-            $table->double('price',11,2);
-            $table->unsignedInteger('parent_id');
+            $table->double('price',11,2)->default(0);
+            $table->unsignedInteger('parent_id')->default(0);
             $table->timestamps();
 
             $table->index('parent_id'); // Parent ID is also the ID of productCategories

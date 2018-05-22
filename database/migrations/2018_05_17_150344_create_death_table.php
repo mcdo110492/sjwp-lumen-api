@@ -15,9 +15,14 @@ class CreateDeathTable extends Migration
     {
         Schema::create('death', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('profile_id');
-            $table->date('dateOfDeath');
-            $table->string('burialPlace',150)->nullable();
+            $table->string('firstName',50);
+            $table->string('middleName',50);
+            $table->string('lastName',50);
+            $table->string('nameExt',50)->nullable();
+            $table->string('residence',50);
+            $table->string('nativeOf',50)->nullable();
+            $table->date('deathDate');
+            $table->string('burialPlace',50)
             $table->date('burialDate');
             $table->unsignedInteger('book')->nullable();
             $table->unsignedInteger('page')->nullable();
@@ -25,7 +30,7 @@ class CreateDeathTable extends Migration
             $table->unsignedInteger('minister_id');
             $table->timestamps();
 
-            $table->index(['profile_id','minister_id']);
+            $table->index('minister_id');
         });
     }
 

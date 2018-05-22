@@ -25,3 +25,4 @@ $factory->define(App\Ministers::class, function (Faker\Generator $faker) {
         'updated_at' => $now
     ];
 });
+

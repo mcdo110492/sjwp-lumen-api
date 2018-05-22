@@ -17,7 +17,7 @@ class CreateMarriageTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('wife_id');
             $table->unsignedInteger('husband_id');
-            $table->date('marraigeDate')->nullable();
+            $table->date('dateMarried');
             $table->unsignedInteger('book')->nullable();
             $table->unsignedInteger('page')->nullable();
             $table->unsignedInteger('entry')->nullable();
