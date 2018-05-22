@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ministers extends Model
 {
 
-    protected  $table = 'minister';
+    protected  $table = 'ministers';
 
     protected  $fillable = [
         'name', 'active'

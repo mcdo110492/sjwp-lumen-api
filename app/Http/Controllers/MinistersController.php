@@ -19,6 +19,11 @@ class MinistersController extends Controller
     protected  $requests;
 
     /**
+     * @var string
+     */
+    protected $table;
+
+    /**
      * MinistersController constructor to create a new controller instance
      *
      * @param Ministers $ministers
@@ -29,6 +34,8 @@ class MinistersController extends Controller
         $this->ministers = $ministers;
 
         $this->requests = $requests;
+
+        $this->table = $ministers->getTable();
     }
 
     /**
@@ -61,7 +68,7 @@ class MinistersController extends Controller
     public function store()
     {
         $this->validate($this->requests, [
-            'name' => 'required|max:50|unique:minister'
+            'name' => 'required|max:50|unique:'.$this->table
         ]);
 
 
@@ -82,7 +89,7 @@ class MinistersController extends Controller
     {
 
         $this->validate($this->requests, [
-            'name' => ['required', Rule::unique('minister')->ignore($id)],
+            'name' => ['required', Rule::unique($this->table)->ignore($id)],
             'active' => 'required|integer'
         ]);
 

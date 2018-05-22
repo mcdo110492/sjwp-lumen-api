@@ -22,7 +22,7 @@ class CreateDeathTable extends Migration
             $table->string('residence',50);
             $table->string('nativeOf',50)->nullable();
             $table->date('deathDate');
-            $table->string('burialPlace',50)
+            $table->string('burialPlace',50);
             $table->date('burialDate');
             $table->unsignedInteger('book')->nullable();
             $table->unsignedInteger('page')->nullable();
