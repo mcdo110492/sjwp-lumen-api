@@ -10,7 +10,7 @@ class MinisterTest extends TestCase
 
     protected $params = ['page' => 1, 'limit' => 5, 'field' => 'name', 'filter' => '', 'order' => 'asc'];
 
-    public function testGetRequest()
+    public function test_it_should_get_data_depending_with_specified_parameter()
     {
 
 
@@ -25,44 +25,90 @@ class MinisterTest extends TestCase
 
     }
 
-    public function testPostStore()
+    public function test_it_should_create_new_minister_and_save_to_database()
     {
 
-        $data1 = factory('App\Ministers')->make()->toArray();
+        $data = factory('App\Ministers')->make()->toArray();
 
-        $response = $this->call('POST','/ministers',$data1);
+        $response = $this->post('/ministers',$data);
 
-        $this->assertEquals(200,$response->status());
+        $response->assertResponseStatus(201);
 
-        $data2 = factory('App\Ministers')->make([
-            'name' => 'Fr. Donato Ofelia'
-        ])->toArray();
+        $response->seeJsonEquals([
+                'isCreated' => true
+        ]);
 
-        $this->post('/ministers',$data2)
-            ->seeJsonEquals([
-                'isCreated' => true ]);
 
     }
 
-    public function testPutStore()
-    {
 
-        factory('App\Ministers')->create();
+    public function test_it_should_update()
+    {
+        $data = factory('App\Ministers')->create();
 
         $updatedData = factory('App\Ministers')->make([
-            'name' => 'Fr. Donato Ofelia',
+            'name' => 'Updated Data',
             'active' => 1
         ])->toArray();
 
-        $response = $this->call('PUT','/ministers/1',$updatedData);
 
-        $this->assertEquals(200,$response->status());
+        $response = $this->put('/ministers/'.$data->id,$updatedData);
 
+        $response->assertResponseStatus(200);
 
+        $response->seeJsonEquals([
+            'isUpdated' => true
+        ]);
 
-        $this->put('/ministers/1',$updatedData)
-            ->seeJsonEquals([
-                'isUpdated' => true ]);
 
     }
+
+
+    public function test_it_should_validate_the_fields_and_return_422_error()
+    {
+
+        $data = ['name' => null];
+
+        $response = $this->post('/ministers',$data);
+
+        $response->assertResponseStatus(422);
+
+    }
+
+    public function test_it_should_failed_if_the_data_is_not_found_when_updating()
+    {
+        $data = ['name' => 'Fr. Donato'];
+
+        $response = $this->put('/ministers/1',$data);
+
+        $response->assertResponseStatus(404);
+
+    }
+
+    public function test_it_should_be_unique_name()
+    {
+
+        $data = factory('App\Ministers')->create();
+
+        $newData = ['name' => $data->name];
+
+        $response = $this->post('/ministers',$newData);
+
+        $response->assertResponseStatus(422);
+
+    }
+
+    public function test_it_should_ignore_the_unique_name_when_updating_with_the_same_id()
+    {
+
+        $data = factory('App\Ministers')->create();
+
+        $updatedData = ['name' => $data->name, 'active' => 1];
+
+        $response = $this->put('/ministers/'.$data->id,$updatedData);
+
+        $response->assertResponseStatus(200);
+
+    }
+
 }

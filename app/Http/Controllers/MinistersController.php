@@ -76,7 +76,7 @@ class MinistersController extends Controller
 
         $this->ministers->create($data);
 
-        return response()->json(['isCreated' => true]);
+        return response()->json(['isCreated' => true],201);
     }
 
     /**
@@ -88,6 +88,8 @@ class MinistersController extends Controller
     public function update($id)
     {
 
+        $minister = $this->ministers->findOrFail($id);
+
         $this->validate($this->requests, [
             'name' => ['required', Rule::unique($this->table)->ignore($id)],
             'active' => 'required|integer'
@@ -95,10 +97,9 @@ class MinistersController extends Controller
 
         $data = ['name' => $this->requests['name'], 'active' => $this->requests['active']];
 
-        $minister = $this->ministers->findOrFail($id);
 
         $minister->update($data);
 
-        return response()->json(['isUpdated' => true]);
+        return response()->json(['isUpdated' => true],200);
     }
 }
