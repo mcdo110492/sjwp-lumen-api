@@ -16,7 +16,7 @@ class CreateConfirmationSponsorsTable extends Migration
         Schema::create('confirmationSponsors', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('confirmation_id');
-            $table->string('sponsor');
+            $table->string('sponsor',150);
             $table->timestamps();
 
             $table->index('confirmation_id');

@@ -35,6 +35,18 @@ $router->put('baptism/sponsor/{id}','BaptismController@updateSponsor');
 
 $router->post('baptism/sponsor/remove/{id}','BaptismController@removeSponsor');
 
+//Confirmation Routes
+$router->get('confirmation','ConfirmationController@index');
+
+$router->post('confirmation','ConfirmationController@store');
+
+$router->put('confirmation/{id}','ConfirmationController@update');
+
+$router->post('confirmation/sponsor/{id}','ConfirmationController@addSponsor');
+
+$router->put('confirmation/sponsor/{id}','ConfirmationController@updateSponsor');
+
+$router->post('confirmation/sponsor/remove/{id}','ConfirmationController@removeSponsor');
 
 //Product Routes
 $router->post('product/category', 'ProductCategoriesController@store');

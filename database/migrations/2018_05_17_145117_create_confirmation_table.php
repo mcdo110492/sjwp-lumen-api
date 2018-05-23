@@ -19,9 +19,9 @@ class CreateConfirmationTable extends Migration
             $table->string('middleName',50);
             $table->string('lastName',50);
             $table->string('nameExt',50)->nullable();
-            $table->date('confirmationDate')->nullable();
-            $table->date('baptismDate')->nullable();
-            $table->string('baptizedAt',50)->nullable();
+            $table->date('confirmationDate');
+            $table->date('baptismDate');
+            $table->string('baptizedAt',150)->nullable();
             $table->unsignedInteger('book')->nullable();
             $table->unsignedInteger('page')->nullable();
             $table->unsignedInteger('minister_id');
