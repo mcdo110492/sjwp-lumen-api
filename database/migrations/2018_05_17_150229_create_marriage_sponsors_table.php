@@ -16,7 +16,7 @@ class CreateMarriageSponsorsTable extends Migration
         Schema::create('marriageSponsors', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('marriage_id');
-            $table->string('sponsor',50);
+            $table->string('sponsor',150);
             $table->timestamps();
 
             $table->index('marriage_id');

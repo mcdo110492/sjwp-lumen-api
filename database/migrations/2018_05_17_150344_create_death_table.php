@@ -19,14 +19,14 @@ class CreateDeathTable extends Migration
             $table->string('middleName',50);
             $table->string('lastName',50);
             $table->string('nameExt',50)->nullable();
-            $table->string('residence',50);
-            $table->string('nativeOf',50)->nullable();
+            $table->string('residence',150);
+            $table->string('nativeOf',150)->nullable();
             $table->date('deathDate');
-            $table->string('burialPlace',50);
+            $table->string('burialPlace',150);
             $table->date('burialDate');
-            $table->unsignedInteger('book')->nullable();
-            $table->unsignedInteger('page')->nullable();
-            $table->unsignedInteger('entry')->nullable();
+            $table->unsignedInteger('book');
+            $table->unsignedInteger('page');
+            $table->unsignedInteger('entry');
             $table->unsignedInteger('minister_id');
             $table->timestamps();
 

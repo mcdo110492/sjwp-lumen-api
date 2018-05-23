@@ -19,10 +19,10 @@ class CreateMarriageWifeTable extends Migration
             $table->string('middleName',50);
             $table->string('lastName',50);
             $table->date('birthdate');
-            $table->string('religion',50)->nullable();
-            $table->string('residence',50)->nullable();
-            $table->string('fatherName',50);
-            $table->string('motherName',50);
+            $table->string('religion',150)->nullable();
+            $table->string('residence',150)->nullable();
+            $table->string('fatherName',150);
+            $table->string('motherName',150);
             $table->timestamps();
         });
     }

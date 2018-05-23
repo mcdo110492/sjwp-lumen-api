@@ -20,10 +20,10 @@ class CreateMarriageHusbandTable extends Migration
             $table->string('lastName',50);
             $table->string('nameExt',50)->nullable();
             $table->date('birthdate');
-            $table->string('religion',50)->nullable();
-            $table->string('residence',50)->nullable();
-            $table->string('fatherName',50);
-            $table->string('motherName',50);
+            $table->string('religion',150)->nullable();
+            $table->string('residence',150)->nullable();
+            $table->string('fatherName',150);
+            $table->string('motherName',150);
             $table->timestamps();
         });
     }
