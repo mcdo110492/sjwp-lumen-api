@@ -50,9 +50,9 @@ class BaptismController extends Controller
      */
     public function index()
     {
-        $relationship = ['sponsors'];
+        $relationship = ['sponsors','minister'];
 
-        $get = $this->baptism->getPaginatedDataWithRelationship($this->request->all(),$relationship);
+        $get = $this->baptism->getPaginatedDataWithRelationship($this->request->input(),$relationship);
 
 
         return response()->json(['count' => $get['count'],'data' => $get['data']],200);
