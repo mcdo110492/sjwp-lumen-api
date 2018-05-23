@@ -48,5 +48,13 @@ $router->put('confirmation/sponsor/{id}','ConfirmationController@updateSponsor')
 
 $router->post('confirmation/sponsor/remove/{id}','ConfirmationController@removeSponsor');
 
+//Death Routes
+$router->get('death','DeathController@index');
+
+$router->post('death','DeathController@store');
+
+$router->put('death/{id}','DeathController@update');
+
+
 //Product Routes
 $router->post('product/category', 'ProductCategoriesController@store');

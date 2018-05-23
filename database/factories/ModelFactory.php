@@ -96,3 +96,26 @@ $factory->define(App\ConfirmationSponsor::class, function(Faker\Generator $faker
     return $data;
 
 });
+
+$factory->define(App\Death::class, function(Faker\Generator $faker) {
+
+    $now = Carbon::now();
+
+    $data = [
+        'firstName' => $faker->firstName,
+        'middleName' => $faker->lastName,
+        'lastName' => $faker->lastName,
+        'nameExt' => 'Jr.',
+        'deathDate' => $now->toDateString(),
+        'burialDate' => $now->toDateString(),
+        'residence' => $faker->address,
+        'burialPlace' => $faker->address,
+        'book' => $faker->numberBetween(1,10),
+        'page' => $faker->numberBetween(1,10),
+        'entry' => $faker->numberBetween(1,10),
+        'minister_id' => $faker->numberBetween(1,10),
+    ];
+
+    return $data;
+
+});
