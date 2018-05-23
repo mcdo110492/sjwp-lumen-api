@@ -77,7 +77,7 @@ class MinisterTest extends TestCase
 
     public function test_it_should_failed_if_the_data_is_not_found_when_updating()
     {
-        $data = ['name' => 'Fr. Donato'];
+        $data = ['name' => 'Fr. Donato', 'active' => 0];
 
         $response = $this->put('/ministers/1',$data);
 

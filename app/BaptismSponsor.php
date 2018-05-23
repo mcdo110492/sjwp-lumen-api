@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BaptismSponsors extends Model
+class BaptismSponsor extends Model
 {
 
-    protected  $table = 'baptism';
+    protected  $table = 'baptismSponsors';
 
     protected  $fillable = [
         'baptism_id', 'sponsor'

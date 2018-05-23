@@ -15,11 +15,26 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
+//Minister Routes
+$router->get('ministers','MinistersController@index');
 
-$router->get('/ministers','MinistersController@index');
+$router->post('ministers','MinistersController@store');
 
-$router->post('/ministers','MinistersController@store');
+$router->put('ministers/{id}','MinistersController@update');
 
-$router->put('/ministers/{id}','MinistersController@update');
+//Baptism Routes
+$router->get('baptism','BaptismController@index');
 
-$router->post('/product/category', 'ProductCategoriesController@store');
+$router->post('baptism','BaptismController@store');
+
+$router->put('baptism/{id}','BaptismController@update');
+
+$router->post('baptism/sponsor/{id}','BaptismController@addSponsor');
+
+$router->put('baptism/sponsor/{id}','BaptismController@updateSponsor');
+
+$router->post('baptism/sponsor/remove/{id}','BaptismController@removeSponsor');
+
+
+//Product Routes
+$router->post('product/category', 'ProductCategoriesController@store');

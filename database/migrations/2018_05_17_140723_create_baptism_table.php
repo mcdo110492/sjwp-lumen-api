@@ -20,8 +20,8 @@ class CreateBaptismTable extends Migration
             $table->string('lastName',50);
             $table->string('nameExt',50)->nullable();
             $table->date('birthdate');
-            $table->string('birthPlace',50);
-            $table->date('baptismDate')->nullable();
+            $table->string('birthPlace',50)->nullable();
+            $table->date('baptismDate');
             $table->unsignedInteger('book')->nullable();
             $table->unsignedInteger('page')->nullable();
             $table->unsignedInteger('entry')->nullable();

@@ -4,21 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Repositories\Repository;
 use App\Ministers;
 
 class MinistersController extends Controller
 {
     /**
-     * The minister reqpository instance
+     * property to bind the repository
      */
-    protected  $ministers;
+    protected  $model;
 
     /**
-     * The request repository instance
+     * property to bind the requests
      */
     protected  $requests;
 
     /**
+     * proepert to bind the table
      * @var string
      */
     protected $table;
@@ -31,7 +33,7 @@ class MinistersController extends Controller
      */
     public function __construct(Ministers $ministers, Request $requests)
     {
-        $this->ministers = $ministers;
+        $this->model = new Repository($ministers);
 
         $this->requests = $requests;
 
@@ -45,19 +47,10 @@ class MinistersController extends Controller
      */
     public function index()
     {
-        $page = $this->requests['page'];
-        $limit = $this->requests['limit'];
-        $field = $this->requests['field'];
-        $filter = $this->requests['filter'];
-        $order = strtoupper($this->requests['order']);
-        $limitPage = $page - 1;
-        $offset = $limit * $limitPage;
 
-        $query = $this->ministers->where($field, 'LIKE', '%'.$filter.'%');
-        $count = $query->count();
-        $data = $query->take($limit)->skip($offset)->orderBy($field,$order)->get();
+        $get = $this->model->getPaginatedData($this->requests->all());
 
-        return response()->json(compact('count','data'));
+        return response()->json($get,200);
     }
 
     /**
@@ -74,7 +67,7 @@ class MinistersController extends Controller
 
         $data = ['name' => $this->requests['name'], 'active' => 0];
 
-        $this->ministers->create($data);
+        $this->model->create($data);
 
         return response()->json(['isCreated' => true],201);
     }
@@ -88,8 +81,6 @@ class MinistersController extends Controller
     public function update($id)
     {
 
-        $minister = $this->ministers->findOrFail($id);
-
         $this->validate($this->requests, [
             'name' => ['required', Rule::unique($this->table)->ignore($id)],
             'active' => 'required|integer'
@@ -97,8 +88,7 @@ class MinistersController extends Controller
 
         $data = ['name' => $this->requests['name'], 'active' => $this->requests['active']];
 
-
-        $minister->update($data);
+        $this->model->update($data,$id);
 
         return response()->json(['isUpdated' => true],200);
     }

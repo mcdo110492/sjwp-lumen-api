@@ -14,4 +14,18 @@ class Baptism extends Model
         'fatherName', 'motherName', 'minister_id'
     ];
 
+    public function sponsors()
+    {
+
+        return $this->hasMany('App\BaptismSponsor');
+
+    }
+
+    public function minister()
+    {
+
+        return $this->belongsTo('App\Ministers')->withDefault(['id' => 0,'name' => "No Assigned Minister."]);
+
+    }
+
 }
