@@ -74,10 +74,11 @@ class BaptismController extends Controller
             'lastName' => 'required|max:50',
             'birthdate' => 'required|date',
             'baptismDate' => 'required|date',
-            'fatherName' => 'required|max:50',
-            'motherName' => 'required|max:50',
+            'birthPlace' => 'max:150',
+            'fatherName' => 'required|max:150',
+            'motherName' => 'required|max:150',
             'minister_id' => 'required|integer',
-            'sponsors.*.sponsor' => 'max:50'
+            'sponsors.*.sponsor' => 'sometimes|max:150'
         ]);
 
         DB::transaction(function() {
@@ -131,8 +132,9 @@ class BaptismController extends Controller
             'lastName' => 'required|max:50',
             'birthdate' => 'required|date',
             'baptismDate' => 'required|date',
-            'fatherName' => 'required|max:50',
-            'motherName' => 'required|max:50',
+            'birthPlace' => 'max:150',
+            'fatherName' => 'required|max:150',
+            'motherName' => 'required|max:150',
             'minister_id' => 'required|integer'
         ]);
 
@@ -171,7 +173,7 @@ class BaptismController extends Controller
         $this->baptism->show($id);
 
         $this->validate($this->request,[
-           'sponsor' => 'required|max:50'
+           'sponsor' => 'required|max:150'
         ]);
 
         $data = ['sponsor' => $this->request['sponsor'], 'baptism_id' => $id];
@@ -193,7 +195,7 @@ class BaptismController extends Controller
     public function updateSponsor($id)
     {
         $this->validate($this->request,[
-           'sponsor' => 'required|max:50'
+           'sponsor' => 'required|max:150'
         ]);
 
         $data = ['sponsor' => $this->request['sponsor']];

@@ -16,7 +16,7 @@ class CreateBaptismSponsorsTable extends Migration
         Schema::create('baptismSponsors', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('baptism_id');
-            $table->string('sponsor',50);
+            $table->string('sponsor',150);
             $table->timestamps();
             $table->index('baptism_id');
         });
