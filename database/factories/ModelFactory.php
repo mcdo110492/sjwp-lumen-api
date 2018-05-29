@@ -119,3 +119,63 @@ $factory->define(App\Death::class, function(Faker\Generator $faker) {
     return $data;
 
 });
+
+
+$factory->define(App\MarriageHusband::class, function(Faker\Generator $faker) {
+    $now = Carbon::now();
+
+    $data = [
+        'firstName' => $faker->firstName,
+        'middleName' => $faker->lastName,
+        'lastName' => $faker->lastName,
+        'nameExt' => 'Jr.',
+        'birthdate' => $now->toDateString(),
+        'religion' => 'Roman Catholic',
+        'residence' => $faker->address,
+        'fatherName' => $faker->name('male'),
+        'motherName' => $faker->name('female')
+    ];
+
+    return $data;
+});
+
+$factory->define(App\MarriageWife::class, function(Faker\Generator $faker) {
+    $now = Carbon::now();
+
+    $data = [
+        'firstName' => $faker->firstName,
+        'middleName' => $faker->lastName,
+        'lastName' => $faker->lastName,
+        'birthdate' => $now->toDateString(),
+        'religion' => 'Roman Catholic',
+        'residence' => $faker->address,
+        'fatherName' => $faker->name('male'),
+        'motherName' => $faker->name('female')
+    ];
+
+    return $data;
+});
+
+$factory->define(App\Marriage::class, function(Faker\Generator $faker) {
+    $now = Carbon::now();
+
+    $data = [
+        'dateMarried' => $now->toDateString(),
+        'book' => $faker->numberBetween(1,10),
+        'page' => $faker->numberBetween(1,10),
+        'entry' => $faker->numberBetween(1,10),
+        'minister_id' => $faker->numberBetween(1,10)
+    ];
+
+    return $data;
+});
+
+$factory->define(App\MarriageSponsor::class, function(Faker\Generator $faker) {
+
+    $now = Carbon::now();
+
+    $data = ['sponsor' => $faker->name, 'created_at' => $now, 'updated_at' => $now];
+
+    return $data;
+
+});

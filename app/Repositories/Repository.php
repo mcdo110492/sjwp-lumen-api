@@ -101,12 +101,13 @@ class Repository implements RepositoryInterface
            $limitPage = $page - 1;
            $offset = $limit * $limitPage;
 
+
            $query = $this->model->where($field, 'LIKE', '%'.$filter.'%');
            $count = $query->count();
+
        }
        catch (Exception $e)
        {
-
            //Throw an error 404 if the column field is not found in the table
            abort(404,'Incorrect Field Parameter.');
 
@@ -114,10 +115,11 @@ class Repository implements RepositoryInterface
 
        if($withRelations)
        {
-           $data = $query->take($limit)->skip($offset)->orderBy($field,$order)->get();
+           $data = $query->with($relationships)->take($limit)->skip($offset)->orderBy($field,$order)->get();
        }
        else
        {
+
            $data = $query->take($limit)->skip($offset)->orderBy($field,$order)->get();
        }
 

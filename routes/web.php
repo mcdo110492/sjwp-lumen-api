@@ -10,11 +10,6 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
-
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
-
 //Minister Routes
 $router->get('ministers','MinistersController@index');
 
@@ -54,6 +49,24 @@ $router->get('death','DeathController@index');
 $router->post('death','DeathController@store');
 
 $router->put('death/{id}','DeathController@update');
+
+//Marriage Routes
+
+$router->get('marriage','MarriageController@index');
+
+$router->post('marriage','MarriageController@store');
+
+$router->put('marriage/husband/{id}','MarriageController@updateHusband');
+
+$router->put('marriage/wife/{id}','MarriageController@updateWife');
+
+$router->put('marriage/{id}','MarriageController@updateMarriage');
+
+$router->post('marriage/sponsor/{id}','MarriageController@addSponsor');
+
+$router->put('marriage/sponsor/{id}', 'MarriageController@updateSponsor');
+
+$router->post('marriage/sponsor/remove/{id}', 'MarriageController@removeSponsor');
 
 
 //Product Routes
