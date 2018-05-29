@@ -52,7 +52,7 @@ class ConfirmationController extends Controller
     {
         $relationship = ['sponsors','minister'];
 
-        $get = $this->confirmation->getPaginatedDataWithRelationship($this->request->input(),$relationship);
+        $get = $this->confirmation->getPaginatedData($this->request->input(),$relationship);
 
 
         return response()->json(['count' => $get['count'],'data' => $get['data']],200);

@@ -48,7 +48,7 @@ class MinistersController extends Controller
     public function index()
     {
 
-        $get = $this->model->getPaginatedData($this->requests->all());
+        $get = $this->model->getPaginatedData($this->requests->all(),[],false);
 
         return response()->json($get,200);
     }

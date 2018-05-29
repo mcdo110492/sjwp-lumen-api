@@ -2,6 +2,7 @@
 
 namespace  App\Repositories;
 
+use Exception;
 use Illuminate\Database\Eloquent\Model;
 
 
@@ -81,55 +82,53 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * Get the model depending on the parameters
-     *
-     * @param array $params
-     * @return array|mixed
-     */
-    public function getPaginatedData(array $params)
-    {
-        $page = $params['page'];
-        $limit = $params['limit'];
-        $field = $params['field'];
-        $filter = $params['filter'];
-        $order = strtoupper($params['order']);
-        $limitPage = $page - 1;
-        $offset = $limit * $limitPage;
-
-        $query = $this->model->where($field, 'LIKE', '%'.$filter.'%');
-        $count = $query->count();
-        $data = $query->take($limit)->skip($offset)->orderBy($field,$order)->get();
-
-        $response = ['count' => $count, 'data' => $data];
-
-        return $response;
-    }
-
-    /**
-     *  Get the model depending on the parameters with relationships
+     * Get the Pagindated Data depends on the paramters and filters
      *
      * @param array $params
      * @param array $relationships
+     * @param bool $withRelations
      * @return array|mixed
      */
-    public function getPaginatedDataWithRelationship(array $params, array $relationships)
+    public function getPaginatedData(array $params, array $relationships = [], bool $withRelations = true)
     {
-        $page = $params['page'];
-        $limit = $params['limit'];
-        $field = $params['field'];
-        $filter = $params['filter'];
-        $order = strtoupper($params['order']);
-        $limitPage = $page - 1;
-        $offset = $limit * $limitPage;
+        //Validate the column field if exists in the table
+       try {
+           $page = $params['page'];
+           $limit = $params['limit'];
+           $field = $params['field'];
+           $filter = $params['filter'];
+           $order = strtoupper($params['order']);
+           $limitPage = $page - 1;
+           $offset = $limit * $limitPage;
 
-        $query = $this->model->with($relationships)->where($field, 'LIKE', '%'.$filter.'%');
-        $count = $query->count();
-        $data = $query->take($limit)->skip($offset)->orderBy($field,$order)->get();
+
+           $query = $this->model->where($field, 'LIKE', '%'.$filter.'%');
+           $count = $query->count();
+
+       }
+       catch (Exception $e)
+       {
+           //Throw an error 404 if the column field is not found in the table
+           abort(404,'Incorrect Field Parameter.');
+
+       }
+
+       if($withRelations)
+       {
+           $data = $query->with($relationships)->take($limit)->skip($offset)->orderBy($field,$order)->get();
+       }
+       else
+       {
+
+           $data = $query->take($limit)->skip($offset)->orderBy($field,$order)->get();
+       }
 
         $response = ['count' => $count, 'data' => $data];
 
         return $response;
     }
+
+
 
 
 }

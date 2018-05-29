@@ -28,4 +28,29 @@ class Baptism extends Model
 
     }
 
+    public function setFirstNameAttribute($value)
+    {
+        $this->attributes['firstName'] = ucfirst($value);
+    }
+
+    public function setMiddleNameAttribute($value)
+    {
+        $this->attributes['middleName'] = ucfirst($value);
+    }
+
+    public function setLastNameAttribute($value)
+    {
+        $this->attributes['lastName'] = ucfirst($value);
+    }
+
+    public function setFatherNameAttribute($value)
+    {
+        $this->attributes['fatherName'] = strtoupper($value);
+    }
+
+    public function setMotherNameAttribute($value)
+    {
+        $this->attributes['motherName'] = strtoupper($value);
+    }
+
 }

@@ -49,20 +49,15 @@ interface RepositoryInterface
 
 
     /**
-     * Get pagianted data by params
-     *
-     * @param array $params
-     * @return mixed
-     */
-    public function getPaginatedData(array $params);
-
-    /**
-     * Get paginated data by params with relationship
+     * Get the Pagindated Data depends on the paramters and filters
      *
      * @param array $params
      * @param array $relationships
+     * @param bool $withRelation
      * @return mixed
      */
-    public function getPaginatedDataWithRelationship(array $params, array $relationships);
+    public function getPaginatedData(array $params, array $relationships = [], bool $withRelation = true);
+
+
 
 }

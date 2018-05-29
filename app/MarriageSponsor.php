@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ConfirmationSponsor extends Model
+class MarriageSponsor extends Model
 {
 
-    protected  $table = 'confirmationSponsors';
+    protected  $table = 'marriageSponsors';
 
     protected  $fillable = [
-        'confirmation_id', 'sponsor'
+        'marriage_id', 'sponsor'
     ];
 
     public function setSponsorAttribute($value)
