@@ -13,4 +13,9 @@ class ConfirmationSponsor extends Model
         'confirmation_id', 'sponsor'
     ];
 
+    public function setSponsorAttribute($value)
+    {
+        $this->attributes['sponsor'] = strtoupper($value);
+    }
+
 }

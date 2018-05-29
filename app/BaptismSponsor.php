@@ -13,4 +13,10 @@ class BaptismSponsor extends Model
         'baptism_id', 'sponsor'
     ];
 
+
+    public function setSponsorAttribute($value)
+    {
+        $this->attributes['sponsor'] = strtoupper($value);
+    }
+
 }

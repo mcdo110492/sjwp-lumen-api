@@ -16,4 +16,9 @@ class ProductCategories extends Model
          'name', 'price', 'parent_id'
     ];
 
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = ucfirst($value);
+    }
+
 }

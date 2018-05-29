@@ -13,4 +13,9 @@ class Ministers extends Model
         'name', 'active'
     ];
 
+
+    public function setNameAttribute($value)
+    {
+        $this->attributes['name'] = strtoupper($value);
+    }
 }
