@@ -44,7 +44,7 @@ class DeathController extends Controller
     {
         $relationship = ['minister'];
 
-        $get = $this->death->getPaginatedDataWithRelationship($this->request->input(),$relationship);
+        $get = $this->death->getPaginatedData($this->request->input(),$relationship);
 
 
         return response()->json(['count' => $get['count'],'data' => $get['data']],200);

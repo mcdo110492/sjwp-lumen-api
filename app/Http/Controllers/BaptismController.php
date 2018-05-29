@@ -52,7 +52,7 @@ class BaptismController extends Controller
     {
         $relationship = ['sponsors','minister'];
 
-        $get = $this->baptism->getPaginatedDataWithRelationship($this->request->input(),$relationship);
+        $get = $this->baptism->getPaginatedData($this->request->input(),$relationship);
 
 
         return response()->json(['count' => $get['count'],'data' => $get['data']],200);
