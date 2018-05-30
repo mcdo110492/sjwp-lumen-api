@@ -14,7 +14,7 @@ class ConfirmationTest extends TestCase
     public function test_it_should_get_data_depending_with_specified_parameter()
     {
 
-        $data = factory(App\Confirmation::class,10)
+         factory(App\Confirmation::class,10)
             ->create()
             ->each(function ($s) {
                 $s->sponsors()->save(factory(App\ConfirmationSponsor::class)->make());
@@ -38,7 +38,6 @@ class ConfirmationTest extends TestCase
             'sponsors' => factory(App\ConfirmationSponsor::class,5)->make()->toArray()
         ])->toArray();
 
-        //dd($data);
 
         $response = $this->post('/confirmation',$data);
 

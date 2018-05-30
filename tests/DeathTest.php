@@ -13,7 +13,7 @@ class DeathTest extends TestCase
     public function test_it_should_get_data_depending_with_specified_parameter()
     {
 
-        $data = factory(App\Death::class,10)
+        factory(App\Death::class,10)
             ->create();
 
 

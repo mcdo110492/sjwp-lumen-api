@@ -19,8 +19,6 @@ class ConfirmationController extends Controller
     //Property for request instance
     protected $request;
 
-    //Property for the confirmation table
-    protected $table;
 
 
     /**
@@ -38,8 +36,6 @@ class ConfirmationController extends Controller
         $this->sponsor = new Repository($sponsor);
 
         $this->request = $request;
-
-        $this->table = $confirmation->getTable();
 
     }
 

@@ -179,3 +179,14 @@ $factory->define(App\MarriageSponsor::class, function(Faker\Generator $faker) {
     return $data;
 
 });
+
+$factory->define(App\ProductCategories::class, function (Faker\Generator $faker) {
+
+    $data = [
+        'name' => $faker->title,
+        'parent_id' => 0
+    ];
+
+    return $data;
+
+});

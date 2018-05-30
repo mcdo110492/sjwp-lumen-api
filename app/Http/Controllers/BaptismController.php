@@ -20,8 +20,6 @@ class BaptismController extends Controller
     //Property for request instance
     protected $request;
 
-    //Property for the baptism table
-    protected $table;
 
 
     /**
@@ -39,7 +37,6 @@ class BaptismController extends Controller
 
         $this->request = $request;
 
-        $this->table = $baptism->getTable();
 
     }
 

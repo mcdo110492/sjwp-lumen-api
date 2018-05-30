@@ -9,7 +9,7 @@ use App\ProductCategories;
 class ProductCategoriesController extends Controller
 {
     /**
-     * The minister reqpository instance
+     * The categiry reqpository instance
      */
     protected  $category;
 
@@ -19,7 +19,7 @@ class ProductCategoriesController extends Controller
     protected  $requests;
 
     /**
-     * MinistersController constructor to create a new controller instance
+     * Controller constructor to create a new controller instance
      *
      * @param ProductCategories $category
      * @param Request $requests
@@ -48,6 +48,7 @@ class ProductCategoriesController extends Controller
         $parent_id = $this->requests['parent_id'];
 
 
+
         $query = $this->category->where(function ($q) use ($parent_id){
             $q->where('parent_id','=',$parent_id);
         })->where($field, 'LIKE', '%'.$filter.'%');
@@ -60,7 +61,7 @@ class ProductCategoriesController extends Controller
     }
 
     /**
-     * Store the minister data
+     * Store the  data
      *
      * @return \Illuminate\Http\JsonResponse
      */
@@ -79,22 +80,21 @@ class ProductCategoriesController extends Controller
     }
 
     /**
-     * Update the minister data
+     * Update the  data
      *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function update($id)
     {
-        $category = $this->category->withUuid($id)->firstOrFail();
+        $category = $this->category->findOrFail($id);
 
         $this->validate($this->requests, [
             'name' => ['required', Rule::unique('productCategories')->ignore($category->id)],
-            'price' => 'number',
             'parent_id' => 'integer'
         ]);
 
-        $data = ['name' => $this->requests['name'], 'price' => $this->requests['price'], 'parent_id' => $this->requests['parent_id']];
+        $data = ['name' => $this->requests['name'], 'parent_id' => $this->requests['parent_id']];
 
 
         $category->update($data);

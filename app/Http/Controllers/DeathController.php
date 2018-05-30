@@ -15,8 +15,6 @@ class DeathController extends Controller
     //Property for request instance
     protected $request;
 
-    //Property for the death table
-    protected $table;
 
 
     /**
@@ -31,7 +29,6 @@ class DeathController extends Controller
 
         $this->request = $request;
 
-        $this->table = $death->getTable();
 
     }
 

@@ -14,7 +14,7 @@ class BaptismTest extends TestCase
     public function test_it_should_get_data_depending_with_specified_parameter()
     {
 
-        $data = factory(App\Baptism::class,10)
+        factory(App\Baptism::class,10)
             ->create()
             ->each(function ($s) {
                  $s->sponsors()->save(factory(App\BaptismSponsor::class)->make());

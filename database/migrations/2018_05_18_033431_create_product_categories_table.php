@@ -15,7 +15,6 @@ class CreateProductCategoriesTable extends Migration
     {
         Schema::create('productCategories', function (Blueprint $table) {
             $table->increments('id');
-            $table->uuid('uuid');
             $table->string('name',150);
             $table->unsignedInteger('parent_id')->default(0);
             $table->timestamps();

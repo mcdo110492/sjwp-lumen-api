@@ -70,4 +70,9 @@ $router->post('marriage/sponsor/remove/{id}', 'MarriageController@removeSponsor'
 
 
 //Product Routes
+
+$router->get('product/category','ProductCategoriesController@index');
+
 $router->post('product/category', 'ProductCategoriesController@store');
+
+$router->put('product/category/{id}', 'ProductCategoriesController@update');
