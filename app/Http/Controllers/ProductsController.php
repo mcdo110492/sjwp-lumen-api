@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use App\ProductCategories;
+use App\Repositories\Repository;
+use App\Products;
 
-class ProductCategoriesController extends Controller
+class ProductsController extends Controller
 {
     /**
-     * The categiry reqpository instance
+     * The product reqpository instance
      */
-    protected  $category;
+    protected  $product;
 
     /**
      * The request repository instance
@@ -19,14 +19,14 @@ class ProductCategoriesController extends Controller
     protected  $requests;
 
     /**
-     * Controller constructor to create a new controller instance
+     * ProductsController constructor.
      *
-     * @param ProductCategories $category
+     * @param Products $category
      * @param Request $requests
      */
-    public function __construct(ProductCategories $category, Request $requests)
+    public function __construct(Products $products, Request $requests)
     {
-        $this->category = $category;
+        $this->product = new Repository($products);
 
         $this->requests = $requests;
     }
@@ -38,26 +38,11 @@ class ProductCategoriesController extends Controller
      */
     public function index()
     {
-        $page = $this->requests['page'];
-        $limit = $this->requests['limit'];
-        $field = $this->requests['field'];
-        $filter = $this->requests['filter'];
-        $order = strtoupper($this->requests['order']);
-        $limitPage = $page - 1;
-        $offset = $limit * $limitPage;
-        $parent_id = $this->requests['parent_id'];
+        $request = $this->requests->input();
 
+        $get = $this->product->getPaginatedData($request,[],false);
 
-
-        $query = $this->category->where(function ($q) use ($parent_id){
-            $q->where('parent_id','=',$parent_id);
-        })->where($field, 'LIKE', '%'.$filter.'%');
-
-
-        $count = $query->count();
-        $data = $query->take($limit)->skip($offset)->orderBy($field,$order)->get();
-
-        return response()->json(compact('count','data'));
+        return response()->json($get,200);
     }
 
     /**
@@ -68,13 +53,34 @@ class ProductCategoriesController extends Controller
     public function store()
     {
         $this->validate($this->requests, [
-            'name' => 'required|max:50|unique:productCategories'
+            'description' => 'required|max:150',
+            'price' => 'required|numeric'
         ]);
 
+        $hasUniqueCode = false;
+        $uniqueCode = null;
 
-        $data = ['name' => $this->requests['name']];
+       // Loop unitl a unique number is generated
+        while(!$hasUniqueCode)
+        {
+            $temUniqueCode = $this->product->generateNumber();
 
-        $this->category->create($data);
+            $count = Products::where('code','=',$temUniqueCode)->count();
+            //Check if generated code is unique and assign it to $uniqueCode to be save in datavbase and exit the loop
+            if($count == 0)
+            {
+                $hasUniqueCode = true;
+                $uniqueCode = $temUniqueCode;
+            }
+        }
+
+
+        $data = ['code' => $uniqueCode,
+            'description' => $this->requests['description'],
+            'price' => $this->requests['price'],
+            'category_id' => $this->requests['category_id']];
+
+        $this->product->create($data);
 
         return response()->json(['isCreated' => true],201);
     }
@@ -87,17 +93,19 @@ class ProductCategoriesController extends Controller
      */
     public function update($id)
     {
-        $category = $this->category->findOrFail($id);
+        $product = $this->product->show($id);
 
         $this->validate($this->requests, [
-            'name' => ['required', Rule::unique('productCategories')->ignore($category->id)],
-            'parent_id' => 'integer'
+            'description' => 'required|max:150',
+            'price' => 'required|numeric'
         ]);
 
-        $data = ['name' => $this->requests['name'], 'parent_id' => $this->requests['parent_id']];
+        $data = ['description' => $this->requests['description'],
+            'price' => $this->requests['price'],
+            'category_id' => $this->requests['category_id']];
 
 
-        $category->update($data);
+        $product->update($data);
 
         return response()->json(['isUpdated' => true]);
     }

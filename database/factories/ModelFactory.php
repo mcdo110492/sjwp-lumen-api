@@ -190,3 +190,45 @@ $factory->define(App\ProductCategories::class, function (Faker\Generator $faker)
     return $data;
 
 });
+
+
+$factory->define(App\Products::class, function(Faker\Generator $faker) {
+
+    $data = [
+        'code' => $faker->randomNumber(),
+        'description'  => $faker->title,
+        'price' => $faker->randomNumber(2),
+        'category_id' => 0
+
+    ];
+
+    return $data;
+
+});
+
+
+$factory->define(App\Sales::class, function(Faker\Generator $faker) {
+
+    $now = Carbon::now()->toDateString();
+
+    $data = [
+        'refNumber' => $faker->numberBetween(1234567, 999999999),
+        'dateIssued' => $now];
+
+    return $data;
+
+});
+
+$factory->define(App\SalesProduct::class, function(Faker\Generator $faker) {
+
+    $data = [
+        'price' => $faker->numberBetween(1,500),
+        'quantity' => $faker->numberBetween(1,10),
+        'product_id' => function() {
+            return factory(App\Products::class)->create()->id;
+        }
+    ];
+
+    return $data;
+
+});

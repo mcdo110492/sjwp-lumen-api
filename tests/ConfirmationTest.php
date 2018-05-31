@@ -1,6 +1,5 @@
 <?php
 
-use Laravel\Lumen\Testing\DatabaseMigrations;
 use Laravel\Lumen\Testing\DatabaseTransactions;
 
 class ConfirmationTest extends TestCase
@@ -43,8 +42,6 @@ class ConfirmationTest extends TestCase
 
 
         $response->assertResponseStatus(201);
-
-        var_dump($data['baptizedAt']);
 
         $response->seeJsonEquals([
             'isCreated' => true

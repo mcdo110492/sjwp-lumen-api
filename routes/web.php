@@ -68,11 +68,27 @@ $router->put('marriage/sponsor/{id}', 'MarriageController@updateSponsor');
 
 $router->post('marriage/sponsor/remove/{id}', 'MarriageController@removeSponsor');
 
+//Products Routes
 
-//Product Routes
+$router->get('products', 'ProductsController@index');
+
+$router->post('products', 'ProductsController@store');
+
+$router->put('products/{id}', 'ProductsController@update');
+
+//Product Category Routes
 
 $router->get('product/category','ProductCategoriesController@index');
 
 $router->post('product/category', 'ProductCategoriesController@store');
 
 $router->put('product/category/{id}', 'ProductCategoriesController@update');
+
+//Sales Routes
+
+$router->get('sales', 'SalesController@index');
+
+$router->post('sales', 'SalesController@store');
+
+$router->put('sales/{id}', 'SalesController@update');
+

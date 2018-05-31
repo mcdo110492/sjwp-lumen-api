@@ -129,6 +129,20 @@ class Repository implements RepositoryInterface
     }
 
 
+    public function generateNumber()
+    {
+        $padLength = 11;
+        $padString = '0';
+        $padType = STR_PAD_LEFT;
+        $beginNumber = 0;
+        $endNumber = 99999999999;
+        $mtRand = mt_rand($beginNumber, $endNumber);
+
+        $uniqueNum = str_pad($mtRand, $padLength, $padString, $padType);
+
+        return $uniqueNum;
+    }
+
 
 
 }

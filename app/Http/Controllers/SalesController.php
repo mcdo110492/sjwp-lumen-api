@@ -3,15 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Repositories\Repository;
-use App\Products;
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
+use App\Sales;
+use App\SalesProduct;
 
-class ProductsController extends Controller
+class SalesController extends Controller
 {
     /**
-     * The product reqpository instance
+     * The sales reqpository instance
      */
-    protected  $product;
+    protected  $sales;
+
+    /**
+     * The sales products instance
+     */
+    protected $products;
 
     /**
      * The request repository instance
@@ -19,14 +26,17 @@ class ProductsController extends Controller
     protected  $requests;
 
     /**
-     * ProductsController constructor.
+     * SalesController constructor.
      *
-     * @param Products $category
+     * @param Sales $sales
+     * @param SalesProduct $products
      * @param Request $requests
      */
-    public function __construct(Products $products, Request $requests)
+    public function __construct(Sales $sales, SalesProduct $products, Request $requests)
     {
-        $this->product = new Repository($products);
+        $this->sales = $sales;
+
+        $this->products = $products;
 
         $this->requests = $requests;
     }
@@ -38,11 +48,20 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $request = $this->requests->input();
+        $startDate = $this->requests['startDate'];
 
-        $get = $this->product->getPaginatedData($request,[],false);
+        $endDate = $this->requests['endDate'];
 
-        return response()->json($get,200);
+        $orderBy = strtoupper($this->requests['orderBy']);
+
+        $get = $this->sales->with('products.product')
+            ->whereBetween('dateIssued',[$startDate, $endDate])
+            ->orderBy('dateIssued', $orderBy)
+            ->get();
+
+        $response = ['data' => $get];
+
+        return response()->json($response,200);
     }
 
     /**
@@ -53,59 +72,49 @@ class ProductsController extends Controller
     public function store()
     {
         $this->validate($this->requests, [
-            'description' => 'required|max:150',
-            'price' => 'required|numeric'
+           'referenceNumber' => 'required|numeric',
+           'products.*.product_id' => 'required|integer',
+           'products.*.price' => 'required|numeric',
+           'products.*.quantity' => 'required|numeric'
         ]);
 
-        $hasUniqueCode = false;
-        $uniqueCode = null;
+        DB::transaction(function() {
 
-       // Loop unitl a unique number is generated
-        while(!$hasUniqueCode)
-        {
-            $temUniqueCode = $this->product->generateNumber();
+            $now = Carbon::now()->toDateString();
 
-            $count = Products::where('code','=',$temUniqueCode)->count();
-            //Check if generated code is unique and assign it to $uniqueCode to be save in datavbase and exit the loop
-            if($count == 0)
+            $salesData = ['refNumber' => $this->requests['referenceNumber'], 'dateIssued' => $now];
+
+            $salesCreate = $this->sales->create($salesData);
+
+            foreach($this->requests['products'] as $product)
             {
-                $hasUniqueCode = true;
-                $uniqueCode = $temUniqueCode;
+                $productData = ['product_id' => $product['product_id'], 'price' => $product['price'], 'quantity' => $product['quantity'], 'sales_id' => $salesCreate->id];
+
+                $this->products->create($productData);
             }
-        }
 
-
-        $data = ['code' => $uniqueCode,
-            'description' => $this->requests['description'],
-            'price' => $this->requests['price'],
-            'category_id' => $this->requests['category_id']];
-
-        $this->product->create($data);
+        });
 
         return response()->json(['isCreated' => true],201);
     }
 
     /**
-     * Update the  data
+     * Update the  status of the sales
      *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function update($id)
     {
-        $product = $this->product->show($id);
+        $sales = $this->sales->findOrFail($id);
 
         $this->validate($this->requests, [
-            'description' => 'required|max:150',
-            'price' => 'required|numeric'
+           'status' => 'required|integer'
         ]);
 
-        $data = ['description' => $this->requests['description'],
-            'price' => $this->requests['price'],
-            'category_id' => $this->requests['category_id']];
+        $data = ['status' => $this->requests['status']];
 
-
-        $product->update($data);
+        $sales->update($data);
 
         return response()->json(['isUpdated' => true]);
     }

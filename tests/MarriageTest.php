@@ -1,6 +1,7 @@
 <?php
 
 use Laravel\Lumen\Testing\DatabaseTransactions;
+
 class MarriageTest extends TestCase
 {
     use DatabaseTransactions;

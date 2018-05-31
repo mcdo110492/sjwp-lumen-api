@@ -58,6 +58,12 @@ interface RepositoryInterface
      */
     public function getPaginatedData(array $params, array $relationships = [], bool $withRelation = true);
 
+    /**
+     * Generate Random Numbers
+     *
+     * @return mixed
+     */
+    public function generateNumber();
 
 
 }

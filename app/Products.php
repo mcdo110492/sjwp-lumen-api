@@ -4,18 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ProductCategories extends Model
+class Products extends Model
 {
 
-    protected  $table = 'productCategories';
+    protected  $table = 'products';
 
     protected  $fillable = [
-         'name', 'parent_id'
+         'code' ,'description', 'price', 'category_id'
     ];
 
-    public function setNameAttribute($value)
+    public function setDescriptionAttribute($value)
     {
-        $this->attributes['name'] = ucfirst($value);
+        $this->attributes['description'] = ucfirst($value);
     }
 
 

@@ -4,18 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Products extends Model
+class Sales extends Model
 {
 
-    protected  $table = 'products';
+    protected  $table = 'sales';
 
     protected  $fillable = [
-         'code' ,'description', 'price', 'category_id'
+         'refNumber', 'dateIssued', 'status'
     ];
 
-    public function setDescriptionAttribute($value)
+    public function products()
     {
-        $this->attributes['description'] = ucfirst($value);
+        return $this->hasMany('App\SalesProduct');
     }
 
 

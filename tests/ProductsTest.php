@@ -2,7 +2,7 @@
 
 use Laravel\Lumen\Testing\DatabaseTransactions;
 
-class ProductCategoriesTest extends TestCase
+class ProductsTest extends TestCase
 {
 
     use DatabaseTransactions;
@@ -10,24 +10,24 @@ class ProductCategoriesTest extends TestCase
 
     public function test_it_should_get_data()
     {
-        factory(App\ProductCategories::class,10)->create();
+        factory(App\Products::class,5)->create();
 
-        $params = ['page' => 1, 'limit' => 5, 'field' => 'name', 'filter' => '', 'order' => 'asc', 'parent_id' => 0];
+        $params = ['page' => 1, 'limit' => 5, 'field' => 'description', 'filter' => '', 'order' => 'asc', 'category_id' => 0];
 
-        $response = $this->json('GET','product/category',$params);
+        $response = $this->json('GET','products',$params);
 
         $response->assertResponseStatus(200);
 
-        $response->seeJson(['count' => 10]);
+        $response->seeJson(['count' => 5]);
 
         $response->seeJsonStructure(['count','data']);
     }
 
     public function test_it_should_create_data()
     {
-        $data = factory(App\ProductCategories::class)->make()->toArray();
+        $data = factory(App\Products::class)->make(['code' => null])->toArray();
 
-        $response = $this->post('product/category',$data);
+        $response = $this->post('products',$data);
 
         $response->assertResponseStatus(201);
 
@@ -37,20 +37,21 @@ class ProductCategoriesTest extends TestCase
 
     public function test_it_should_validate()
     {
-        $data = ['name' => null];
+        $data = ['description' => 'Sample Data', 'price' => 'hello world'];
 
-        $response = $this->post('product/category',$data);
+        $response = $this->post('products',$data);
 
         $response->assertResponseStatus(422);
+
     }
 
     public function test_it_should_update()
     {
-        $create = factory(App\ProductCategories::class)->create();
+        $create = factory(App\Products::class)->create();
 
-        $data = factory(App\ProductCategories::class)->make(['name' => 'Updated Data'])->toArray();
+        $data = factory(App\Products::class)->make(['description' => 'Updated Data'])->toArray();
 
-        $response = $this->put('product/category/'.$create->id, $data);
+        $response = $this->put('products/'.$create->id, $data);
 
         $response->assertResponseStatus(200);
 
@@ -61,21 +62,9 @@ class ProductCategoriesTest extends TestCase
     public function test_it_should_validate_if_the_data_exists_when_updating()
     {
 
-        $response = $this->put('product/category/22',[]);
+        $response = $this->put('products/22',[]);
 
         $response->assertResponseStatus(404);
-    }
-
-    public function test_it_should_validate_unique_name()
-    {
-        $create = factory(App\ProductCategories::class)->create();
-
-        $data = factory(App\ProductCategories::class)->make(['name' => $create->name])->toArray();
-
-        $response = $this->post('product/category',$data);
-
-        $response->assertResponseStatus(422);
-
     }
 
 

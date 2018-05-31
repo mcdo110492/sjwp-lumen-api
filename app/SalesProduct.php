@@ -4,18 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Products extends Model
+class SalesProduct extends Model
 {
 
-    protected  $table = 'products';
+    protected  $table = 'salesProduct';
 
     protected  $fillable = [
-         'code' ,'description', 'price', 'category_id'
+         'product_id' ,'price', 'quantity', 'sales_id'
     ];
 
-    public function setDescriptionAttribute($value)
+    public function product()
     {
-        $this->attributes['description'] = ucfirst($value);
+        return $this->belongsTo('App\Products','product_id');
     }
 
 
