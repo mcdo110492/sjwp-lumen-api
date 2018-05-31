@@ -16,6 +16,7 @@ class CreateSalesTable extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('refNumber');
+            $table->date('dateIssued');
             $table->timestamps();
         });
     }
