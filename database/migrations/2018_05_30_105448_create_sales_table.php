@@ -17,6 +17,7 @@ class CreateSalesTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('refNumber');
             $table->date('dateIssued');
+            $table->unsignedInteger('status')->default(1);
             $table->timestamps();
         });
     }
