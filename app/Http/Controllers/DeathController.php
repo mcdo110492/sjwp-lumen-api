@@ -74,18 +74,18 @@ class DeathController extends Controller
 
 
         $data = [
-            'firstName' => $this->request['firstName'],
-            'middleName' => $this->request['middleName'],
-            'lastName' => $this->request['lastName'],
-            'nameExt' => $this->request['nameExt'],
-            'deathDate' => $this->request['deathDate'],
-            'burialDate' => $this->request['burialDate'],
-            'residence' => $this->request['residence'],
-            'burialPlace' => $this->request['burialPlace'],
-            'book' => $this->request['book'],
-            'page' => $this->request['page'],
-            'entry' => $this->request['entry'],
-            'minister_id' => $this->request['minister_id']
+            'firstName' => $this->request->input('firstName'),
+            'middleName' => $this->request->input('middleName'),
+            'lastName' => $this->request->input('lastName'),
+            'nameExt' => $this->request->input('nameExt'),
+            'deathDate' => $this->request->input('deathDate'),
+            'burialDate' => $this->request->input('burialDate'),
+            'residence' => $this->request->input('residence'),
+            'burialPlace' => $this->request->input('burialPlace'),
+            'book' => $this->request->input('book'),
+            'page' => $this->request->input('page'),
+            'entry' => $this->request->input('entry'),
+            'minister_id' => $this->request->input('minister_id')
         ];
 
 
@@ -123,18 +123,18 @@ class DeathController extends Controller
         ]);
 
         $data = [
-            'firstName' => $this->request['firstName'],
-            'middleName' => $this->request['middleName'],
-            'lastName' => $this->request['lastName'],
-            'nameExt' => $this->request['nameExt'],
-            'deathDate' => $this->request['deathDate'],
-            'burialDate' => $this->request['burialDate'],
-            'residence' => $this->request['residence'],
-            'burialPlace' => $this->request['burialPlace'],
-            'book' => $this->request['book'],
-            'page' => $this->request['page'],
-            'entry' => $this->request['entry'],
-            'minister_id' => $this->request['minister_id']
+            'firstName' => $this->request->input('firstName'),
+            'middleName' => $this->request->input('middleName'),
+            'lastName' => $this->request->input('lastName'),
+            'nameExt' => $this->request->input('nameExt'),
+            'deathDate' => $this->request->input('deathDate'),
+            'burialDate' => $this->request->input('burialDate'),
+            'residence' => $this->request->input('residence'),
+            'burialPlace' => $this->request->input('burialPlace'),
+            'book' => $this->request->input('book'),
+            'page' => $this->request->input('page'),
+            'entry' => $this->request->input('entry'),
+            'minister_id' => $this->request->input('minister_id')
         ];
 
         $this->death->update($data,$id);

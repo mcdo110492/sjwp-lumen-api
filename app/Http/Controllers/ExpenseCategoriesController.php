@@ -72,7 +72,7 @@ class ExpenseCategoriesController extends Controller
         ]);
 
 
-        $data = ['name' => $this->requests['name']];
+        $data = ['name' => $this->requests->input('name')];
 
         $this->category->create($data);
 
@@ -94,7 +94,7 @@ class ExpenseCategoriesController extends Controller
             'parent_id' => 'integer'
         ]);
 
-        $data = ['name' => $this->requests['name'], 'parent_id' => $this->requests->input('parent_id')];
+        $data = ['name' => $this->requests->input('name'), 'parent_id' => $this->requests->input('parent_id')];
 
 
         $category->update($data);

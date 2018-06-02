@@ -38,14 +38,14 @@ class ProductCategoriesController extends Controller
      */
     public function index()
     {
-        $page = $this->requests['page'];
-        $limit = $this->requests['limit'];
-        $field = $this->requests['field'];
-        $filter = $this->requests['filter'];
-        $order = strtoupper($this->requests['order']);
+        $page = $this->requests->input('page');
+        $limit = $this->requests->input('limit');
+        $field = $this->requests->input('field');
+        $filter = $this->requests->input('filter');
+        $order = strtoupper($this->requests->input('order'));
         $limitPage = $page - 1;
         $offset = $limit * $limitPage;
-        $parent_id = $this->requests['parent_id'];
+        $parent_id = $this->requests->input('parent_id');
 
 
 
@@ -72,7 +72,7 @@ class ProductCategoriesController extends Controller
         ]);
 
 
-        $data = ['name' => $this->requests['name']];
+        $data = ['name' => $this->requests->input('name')];
 
         $this->category->create($data);
 
@@ -94,7 +94,7 @@ class ProductCategoriesController extends Controller
             'parent_id' => 'integer'
         ]);
 
-        $data = ['name' => $this->requests['name'], 'parent_id' => $this->requests['parent_id']];
+        $data = ['name' => $this->requests->input('name'), 'parent_id' => $this->requests->input('parent_id')];
 
 
         $category->update($data);

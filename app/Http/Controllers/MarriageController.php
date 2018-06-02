@@ -95,28 +95,28 @@ class MarriageController extends Controller
 
         DB::transaction(function() {
 
-            $husband = $this->request['husband'];
+            $husband = $this->request->input('husband');
 
             $createHusband = $this->husband->create($husband);
 
-            $wife = $this->request['wife'];
+            $wife = $this->request->input('wife');
 
             $createWife = $this->wife->create($wife);
 
             $marriage = [
                 'husband_id' => $createHusband->id,
                 'wife_id' => $createWife->id,
-                'dateMarried' => $this->request['dateMarried'],
-                'book' => $this->request['book'],
-                'page' => $this->request['page'],
-                'entry' => $this->request['entry'],
-                'minister_id' => $this->request['minister_id']
+                'dateMarried' => $this->request->input('dateMarried'),
+                'book' => $this->request->input('book'),
+                'page' => $this->request->input('page'),
+                'entry' => $this->request->input('entry'),
+                'minister_id' => $this->request->input('minister_id')
             ];
 
             $createMarriage = $this->marriage->create($marriage);
 
 
-            foreach ($this->request['sponsors'] as $sponsor)
+            foreach ($this->request->input('sponsors') as $sponsor)
             {
                 $sponsorData = ['sponsor' => $sponsor['sponsor'], 'marriage_id' => $createMarriage->id];
 
@@ -202,7 +202,7 @@ class MarriageController extends Controller
             'sponsor' => 'required|max:150'
         ]);
 
-        $data = ['sponsor' => $this->request['sponsor'], 'marriage_id' => $id];
+        $data = ['sponsor' => $this->request->input('sponsor'), 'marriage_id' => $id];
 
         $this->sponsor->create($data);
 
@@ -224,7 +224,7 @@ class MarriageController extends Controller
             'sponsor' => 'required|max:150'
         ]);
 
-        $data = ['sponsor' => $this->request['sponsor']];
+        $data = ['sponsor' => $this->request->input('sponsor')];
 
         $this->sponsor->update($data,$id);
 

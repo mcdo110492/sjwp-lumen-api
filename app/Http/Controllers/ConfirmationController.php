@@ -78,22 +78,22 @@ class ConfirmationController extends Controller
         DB::transaction(function() {
 
             $data = [
-                'firstName' => $this->request['firstName'],
-                'middleName' => $this->request['middleName'],
-                'lastName' => $this->request['lastName'],
-                'nameExt' => $this->request['nameExt'],
-                'confirmationDate' => $this->request['confirmationDate'],
+                'firstName' => $this->request->input('firstName'),
+                'middleName' => $this->request->input('middleName'),
+                'lastName' => $this->request->input('lastName'),
+                'nameExt' => $this->request->input('nameExt'),
+                'confirmationDate' => $this->request->input('confirmationDate'),
                 'baptizedAt' => $this->request['baptizedAt'],
-                'baptismDate' => $this->request['baptismDate'],
-                'book' => $this->request['book'],
-                'page' => $this->request['page'],
-                'minister_id' => $this->request['minister_id']
+                'baptismDate' => $this->request->input('baptismDate'),
+                'book' => $this->request->input('book'),
+                'page' => $this->request->input('page'),
+                'minister_id' => $this->request->input('minister_id')
             ];
 
             $create = $this->confirmation->create($data);
 
 
-            foreach ($this->request['sponsors'] as $sponsor)
+            foreach ($this->request->input('sponsors') as $sponsor)
             {
                 $sponsorData = ['sponsor' => $sponsor['sponsor'], 'confirmation_id' => $create->id];
 
@@ -128,16 +128,16 @@ class ConfirmationController extends Controller
         ]);
 
         $data = [
-            'firstName' => $this->request['firstName'],
-            'middleName' => $this->request['middleName'],
-            'lastName' => $this->request['lastName'],
-            'nameExt' => $this->request['nameExt'],
-            'confirmationDate' => $this->request['confirmationDate'],
+            'firstName' => $this->request->input('firstName'),
+            'middleName' => $this->request->input('middleName'),
+            'lastName' => $this->request->input('lastName'),
+            'nameExt' => $this->request->input('nameExt'),
+            'confirmationDate' => $this->request->input('confirmationDate'),
             'baptizedAt' => $this->request['baptizedAt'],
-            'baptismDate' => $this->request['baptismDate'],
-            'book' => $this->request['book'],
-            'page' => $this->request['page'],
-            'minister_id' => $this->request['minister_id']
+            'baptismDate' => $this->request->input('baptismDate'),
+            'book' => $this->request->input('book'),
+            'page' => $this->request->input('page'),
+            'minister_id' => $this->request->input('minister_id')
         ];
 
         $this->confirmation->update($data,$id);
@@ -162,7 +162,7 @@ class ConfirmationController extends Controller
             'sponsor' => 'required|max:150'
         ]);
 
-        $data = ['sponsor' => $this->request['sponsor'], 'confirmation_id' => $id];
+        $data = ['sponsor' => $this->request->input('sponsor'), 'confirmation_id' => $id];
 
         $this->sponsor->create($data);
 
@@ -184,7 +184,7 @@ class ConfirmationController extends Controller
             'sponsor' => 'required|max:150'
         ]);
 
-        $data = ['sponsor' => $this->request['sponsor']];
+        $data = ['sponsor' => $this->request->input('sponsor')];
 
         $this->sponsor->update($data,$id);
 

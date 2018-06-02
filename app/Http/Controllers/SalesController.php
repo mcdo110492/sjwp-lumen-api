@@ -48,11 +48,11 @@ class SalesController extends Controller
      */
     public function index()
     {
-        $startDate = $this->requests['startDate'];
+        $startDate = $this->requests->input('startDate');
 
-        $endDate = $this->requests['endDate'];
+        $endDate = $this->requests->input('endDate');
 
-        $orderBy = strtoupper($this->requests['orderBy']);
+        $orderBy = strtoupper($this->requests->input('orderBy'));
 
         $get = $this->sales->with('products.product')
             ->whereBetween('dateIssued',[$startDate, $endDate])
@@ -82,7 +82,7 @@ class SalesController extends Controller
 
             $now = Carbon::now()->toDateString();
 
-            $salesData = ['refNumber' => $this->requests['referenceNumber'], 'dateIssued' => $now];
+            $salesData = ['refNumber' => $this->requests->input('referenceNumber'), 'dateIssued' => $now];
 
             $salesCreate = $this->sales->create($salesData);
 
@@ -112,7 +112,7 @@ class SalesController extends Controller
            'status' => 'required|integer'
         ]);
 
-        $data = ['status' => $this->requests['status']];
+        $data = ['status' => $this->requests->input('status')];
 
         $sales->update($data);
 

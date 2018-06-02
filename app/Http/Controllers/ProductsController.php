@@ -66,7 +66,7 @@ class ProductsController extends Controller
             $temUniqueCode = $this->product->generateNumber();
 
             $count = Products::where('code','=',$temUniqueCode)->count();
-            //Check if generated code is unique and assign it to $uniqueCode to be save in datavbase and exit the loop
+            //Check if generated code is unique and assign it to $uniqueCode to be save in database and exit the loop
             if($count == 0)
             {
                 $hasUniqueCode = true;
@@ -76,9 +76,9 @@ class ProductsController extends Controller
 
 
         $data = ['code' => $uniqueCode,
-            'description' => $this->requests['description'],
-            'price' => $this->requests['price'],
-            'category_id' => $this->requests['category_id']];
+            'description' => $this->requests->input('description'),
+            'price' => $this->requests->input('price'),
+            'category_id' => $this->requests->input('category_id')];
 
         $this->product->create($data);
 
@@ -99,9 +99,9 @@ class ProductsController extends Controller
             'price' => 'required|numeric'
         ]);
 
-        $data = ['description' => $this->requests['description'],
-            'price' => $this->requests['price'],
-            'category_id' => $this->requests['category_id']];
+        $data = ['description' => $this->requests->input('description'),
+            'price' => $this->requests->input('price'),
+            'category_id' => $this->requests->input('category_id')];
 
 
         $this->product->update($data,$id);

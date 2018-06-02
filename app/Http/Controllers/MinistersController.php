@@ -48,7 +48,7 @@ class MinistersController extends Controller
     public function index()
     {
 
-        $get = $this->model->getPaginatedData($this->requests->all(),[],false);
+        $get = $this->model->getPaginatedData($this->requests->input(),[],false);
 
         return response()->json($get,200);
     }
@@ -65,7 +65,7 @@ class MinistersController extends Controller
         ]);
 
 
-        $data = ['name' => $this->requests['name'], 'active' => 0];
+        $data = ['name' => $this->requests->input('name'), 'active' => 0];
 
         $this->model->create($data);
 
@@ -86,7 +86,7 @@ class MinistersController extends Controller
             'active' => 'required|integer'
         ]);
 
-        $data = ['name' => $this->requests['name'], 'active' => $this->requests['active']];
+        $data = ['name' => $this->requests->input('name'), 'active' => $this->requests->input('active')];
 
         $this->model->update($data,$id);
 
