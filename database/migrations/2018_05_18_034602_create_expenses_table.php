@@ -18,6 +18,7 @@ class CreateExpensesTable extends Migration
             $table->unsignedInteger('refNumber');
             $table->date('dateIssued');
             $table->string('remarks',150)->nullable();
+            $table->unsignedInteger('status')->default(1);
             $table->timestamps();
         });
     }
