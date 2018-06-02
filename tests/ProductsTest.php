@@ -61,8 +61,9 @@ class ProductsTest extends TestCase
 
     public function test_it_should_validate_if_the_data_exists_when_updating()
     {
+        $data = factory(App\Products::class)->make()->toArray();
 
-        $response = $this->put('products/22',[]);
+        $response = $this->put('products/22',$data);
 
         $response->assertResponseStatus(404);
     }

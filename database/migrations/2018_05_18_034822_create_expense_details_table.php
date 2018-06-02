@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExpenseInvoiceCategoriesTable extends Migration
+class CreateExpenseDetailsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class CreateExpenseInvoiceCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('expenseInvoiceCategories', function (Blueprint $table) {
+        Schema::create('expenseDetails', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('expense_id');
+            $table->unsignedInteger('category_id');
             $table->double('amount',11,2);
             $table->timestamps();
 
-            $table->index('expense_id'); // expense_id is the id of expenseInvoices
+            $table->index(['expense_id','category_id']); // expense_id is the id of expenses and category_id is the id of expenseCategories
         });
     }
 
@@ -30,6 +31,6 @@ class CreateExpenseInvoiceCategoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('expenseInvoiceCategories');
+        Schema::dropIfExists('expenseDetails');
     }
 }

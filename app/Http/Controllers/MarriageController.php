@@ -140,11 +140,9 @@ class MarriageController extends Controller
     public function updateHusband($id)
     {
 
-        $husband = $this->husband->show($id);
-
         $this->validate($this->request,Marriage::$husbandWifeRules);
 
-        $husband->update($this->request->input());
+        $this->husband->update($this->request->input(),$id);
 
         return response()->json(['isUpdated' => true],200);
 
@@ -160,11 +158,9 @@ class MarriageController extends Controller
     public function updateWife($id)
     {
 
-        $wife = $this->wife->show($id);
-
         $this->validate($this->request,Marriage::$husbandWifeRules);
 
-        $wife->update($this->request->input());
+        $this->wife->update($this->request->input(),$id);
 
         return response()->json(['isUpdated' => true],200);
 
@@ -180,11 +176,10 @@ class MarriageController extends Controller
     public function updateMarriage($id)
     {
 
-        $marriage = $this->marriage->show($id);
 
         $this->validate($this->request,Marriage::$marriageRules);
 
-        $marriage->update($this->request->input());
+        $this->marriage->update($this->request->input(),$id);
 
         return response()->json(['isUpdated' => true],200);
 

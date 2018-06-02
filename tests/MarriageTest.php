@@ -265,8 +265,9 @@ class MarriageTest extends TestCase
 
     public function test_it_should_return_404_if_husband_does_not_exists()
     {
+        $data = factory(App\MarriageHusband::class)->make()->toArray();
 
-        $update = $this->put('marriage/husband/2',[]);
+        $update = $this->put('marriage/husband/2', $data);
 
         $update->assertResponseStatus(404);
 
@@ -274,8 +275,9 @@ class MarriageTest extends TestCase
 
     public function test_it_should_return_404_if_wife_does_not_exists()
     {
+        $data = factory(App\MarriageWife::class)->make()->toArray();
 
-        $update = $this->put('marriage/wife/2',[]);
+        $update = $this->put('marriage/wife/2', $data);
 
         $update->assertResponseStatus(404);
 
@@ -283,8 +285,9 @@ class MarriageTest extends TestCase
 
     public function test_it_should_return_404_if_marriage_does_not_exists()
     {
+        $data = factory(App\Marriage::class)->make()->toArray();
 
-        $update = $this->put('marriage/2',[]);
+        $update = $this->put('marriage/2', $data);
 
         $update->assertResponseStatus(404);
 

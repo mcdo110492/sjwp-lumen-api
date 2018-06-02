@@ -93,7 +93,6 @@ class ProductsController extends Controller
      */
     public function update($id)
     {
-        $product = $this->product->show($id);
 
         $this->validate($this->requests, [
             'description' => 'required|max:150',
@@ -105,7 +104,7 @@ class ProductsController extends Controller
             'category_id' => $this->requests['category_id']];
 
 
-        $product->update($data);
+        $this->product->update($data,$id);
 
         return response()->json(['isUpdated' => true]);
     }
