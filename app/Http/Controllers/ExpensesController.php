@@ -5,20 +5,20 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
-use App\Sales;
-use App\SalesProduct;
+use App\Expenses;
+use App\ExpenseDetails;
 
-class SalesController extends Controller
+class ExpensesController extends Controller
 {
     /**
-     * The sales reqpository instance
+     * The expenses reqpository instance
      */
-    protected  $sales;
+    protected  $expenses;
 
     /**
-     * The sales products instance
+     * The expense details instance
      */
-    protected $products;
+    protected $details;
 
     /**
      * The request repository instance
@@ -26,17 +26,17 @@ class SalesController extends Controller
     protected  $requests;
 
     /**
-     * SalesController constructor.
+     * Controller constructor.
      *
-     * @param Sales $sales
-     * @param SalesProduct $products
+     * @param Expenses $expenses
+     * @param ExpenseDetails $details
      * @param Request $requests
      */
-    public function __construct(Sales $sales, SalesProduct $products, Request $requests)
+    public function __construct(Expenses $expenses, ExpenseDetails $details, Request $requests)
     {
-        $this->sales = $sales;
+        $this->expenses = $expenses;
 
-        $this->products = $products;
+        $this->details = $details;
 
         $this->requests = $requests;
     }
@@ -54,7 +54,7 @@ class SalesController extends Controller
 
         $orderBy = strtoupper($this->requests->input('orderBy'));
 
-        $get = $this->sales->with('products.product')
+        $get = $this->expenses->with('details.categories')
             ->whereBetween('dateIssued',[$startDate, $endDate])
             ->orderBy('dateIssued', $orderBy)
             ->get();
@@ -72,25 +72,24 @@ class SalesController extends Controller
     public function store()
     {
         $this->validate($this->requests, [
-           'referenceNumber' => 'required|numeric|unique:sales,refNumber',
-           'products.*.product_id' => 'required|integer',
-           'products.*.price' => 'required|numeric',
-           'products.*.quantity' => 'required|numeric'
+            'referenceNumber' => 'required|numeric|unique:expenses,refNumber',
+            'details.*.category_id' => 'required|integer',
+            'details.*.amount' => 'required|numeric',
         ]);
 
         DB::transaction(function() {
 
             $now = Carbon::now()->toDateString();
 
-            $salesData = ['refNumber' => $this->requests->input('referenceNumber'), 'dateIssued' => $now];
+            $expensesData = ['refNumber' => $this->requests->input('referenceNumber'), 'dateIssued' => $now];
 
-            $salesCreate = $this->sales->create($salesData);
+            $expensesCreate = $this->expenses->create($expensesData);
 
-            foreach($this->requests->input('products') as $product)
+            foreach($this->requests->input('details') as $category)
             {
-                $productData = ['product_id' => $product['product_id'], 'price' => $product['price'], 'quantity' => $product['quantity'], 'sales_id' => $salesCreate->id];
+                $expenseDetails = ['category_id' => $category['category_id'], 'price' => $category['amount'], 'sales_id' => $expensesCreate->id];
 
-                $this->products->create($productData);
+                $this->details->create($expenseDetails);
             }
 
         });
@@ -99,23 +98,23 @@ class SalesController extends Controller
     }
 
     /**
-     * Update the  status of the sales
+     * Update the  status of the expenses
      *
      * @param $id
      * @return \Illuminate\Http\JsonResponse
      */
     public function update($id)
     {
-        $sales = $this->sales->findOrFail($id);
+        $expenses = $this->expenses->findOrFail($id);
 
         $this->validate($this->requests, [
-           'status' => 'required|integer',
+            'status' => 'required|integer',
             'remarks' => 'max:150'
         ]);
 
         $data = ['status' => $this->requests->input('status'), 'remarks' => $this->requests->input('remarks')];
 
-        $sales->update($data);
+        $expenses->update($data);
 
         return response()->json(['isUpdated' => true]);
     }

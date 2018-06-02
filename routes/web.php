@@ -100,3 +100,11 @@ $router->post('expense/category', 'ExpenseCategoriesController@store');
 
 $router->put('expense/category/{id}', 'ExpenseCategoriesController@update');
 
+//Expenses Routes
+
+$router->get('expenses', 'ExpensesController@index');
+
+$router->post('expenses', 'ExpensesController@store');
+
+$router->put('expenses/{id}', 'ExpensesController@update');
+

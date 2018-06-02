@@ -245,3 +245,29 @@ $factory->define(App\ExpenseCategories::class, function(Faker\Generator $faker) 
     return $data;
 
 });
+
+$factory->define(App\Expenses::class, function(Faker\Generator $faker) {
+
+    $now = Carbon::now();
+
+    $data = [
+        'refNumber' => $faker->numberBetween(1234567, 99999999),
+        'remarks' => $faker->sentence(5),
+        'dateIssued' => $now->toDateString()
+    ];
+
+    return $data;
+
+});
+
+$factory->define(App\ExpenseDetails::class, function(Faker\Generator $faker) {
+
+    $now = Carbon::now();
+
+    $data = ['category_id' => function(){
+        return factory(App\ExpenseCategories::class)->create()->id;
+    }, 'amount' => $faker->numberBetween(1,5000)];
+
+    return $data;
+
+});
