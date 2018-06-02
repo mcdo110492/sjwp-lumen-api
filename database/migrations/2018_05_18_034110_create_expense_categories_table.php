@@ -16,7 +16,7 @@ class CreateExpenseCategoriesTable extends Migration
         Schema::create('expenseCategories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',150)->unique();
-            $table->unsignedInteger('parent_id');
+            $table->unsignedInteger('parent_id')->default(0);
             $table->timestamps();
 
             $table->index('parent_id'); // parent_id is also the id of expenseCategories
