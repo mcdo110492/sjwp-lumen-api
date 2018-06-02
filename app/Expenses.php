@@ -4,19 +4,18 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Sales extends Model
+class Expenses extends Model
 {
 
-    protected  $table = 'sales';
+    protected  $table = 'expenses';
 
     protected  $fillable = [
-         'refNumber', 'dateIssued', 'status'
+         'refNumber', 'dateIssued', 'status','remarks'
     ];
 
-    public function products()
+    public function details()
     {
-        return $this->hasMany('App\SalesProduct');
+        return $this->hasMany('App\ExpenseDetails','expense_id');
     }
-
 
 }

@@ -4,12 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\ProductCategories;
+use App\ExpenseCategories;
 
-class ProductCategoriesController extends Controller
+class ExpenseCategoriesController extends Controller
 {
     /**
-     * The categiry reqpository instance
+     * The category reqpository instance
      */
     protected  $category;
 
@@ -19,12 +19,12 @@ class ProductCategoriesController extends Controller
     protected  $requests;
 
     /**
-     * Controller constructor to create a new controller instance
+     * Controller constructor.
      *
-     * @param ProductCategories $category
+     * @param ExpenseCategories $category
      * @param Request $requests
      */
-    public function __construct(ProductCategories $category, Request $requests)
+    public function __construct(ExpenseCategories $category, Request $requests)
     {
         $this->category = $category;
 
@@ -68,7 +68,7 @@ class ProductCategoriesController extends Controller
     public function store()
     {
         $this->validate($this->requests, [
-            'name' => 'required|max:50|unique:productCategories'
+            'name' => 'required|max:150|unique:expenseCategories'
         ]);
 
 
@@ -90,11 +90,11 @@ class ProductCategoriesController extends Controller
         $category = $this->category->findOrFail($id);
 
         $this->validate($this->requests, [
-            'name' => ['required', Rule::unique('productCategories')->ignore($category->id)],
+            'name' => ['required', 'max:150', Rule::unique('expenseCategories')->ignore($category->id)],
             'parent_id' => 'integer'
         ]);
 
-        $data = ['name' => $this->requests['name'], 'parent_id' => $this->requests['parent_id']];
+        $data = ['name' => $this->requests['name'], 'parent_id' => $this->requests->input('parent_id')];
 
 
         $category->update($data);

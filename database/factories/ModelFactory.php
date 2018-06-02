@@ -232,3 +232,16 @@ $factory->define(App\SalesProduct::class, function(Faker\Generator $faker) {
     return $data;
 
 });
+
+
+$factory->define(App\ExpenseCategories::class, function(Faker\Generator $faker) {
+
+    $now = Carbon::now();
+
+    $data = [
+        'name' => $faker->name
+    ];
+
+    return $data;
+
+});

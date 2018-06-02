@@ -92,3 +92,11 @@ $router->post('sales', 'SalesController@store');
 
 $router->put('sales/{id}', 'SalesController@update');
 
+//Expense Category Routes
+
+$router->get('expense/category', 'ExpenseCategoriesController@index');
+
+$router->post('expense/category', 'ExpenseCategoriesController@store');
+
+$router->put('expense/category/{id}', 'ExpenseCategoriesController@update');
+
