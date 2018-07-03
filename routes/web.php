@@ -10,12 +10,14 @@
 | and give it the Closure to call when that URI is requested.
 |
 */
+
 //Minister Routes
 $router->get('ministers','MinistersController@index');
 
 $router->post('ministers','MinistersController@store');
 
 $router->put('ministers/{id}','MinistersController@update');
+
 
 //Baptism Routes
 $router->get('baptism','BaptismController@index');
