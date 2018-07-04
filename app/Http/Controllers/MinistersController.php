@@ -53,6 +53,32 @@ class MinistersController extends Controller
         return response()->json($get,200);
     }
 
+    public function checkNameTaken(){
+
+       $id = $this->requests->input('id');
+       $value = $this->requests->input('value');
+
+       $query = Ministers::where('name','=',$value);
+
+       if($id != 0){
+
+           $count = $query->where('id','!=',$id)->count();
+
+           $isUnique = $isUnique = ($count > 0) ? false : true;
+
+       }
+       else{
+
+           $count = $query->count();
+
+           $isUnique = ($count > 0) ? false : true;
+
+       }
+
+       return response()->json(['isUnique' => $isUnique],200);
+
+    }
+
     /**
      * Store the minister data
      *
@@ -93,7 +119,12 @@ class MinistersController extends Controller
         return response()->json(['isUpdated' => true],200);
     }
 
-
+   /**
+    * Change Status of Minister
+    *
+    * @param $id
+    * @return \Illuminate\Http\JsonResponse
+    */
     public function changeStatus($id){
 
         $this->validate($this->requests, [
