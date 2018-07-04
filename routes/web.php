@@ -18,6 +18,8 @@ $router->post('ministers','MinistersController@store');
 
 $router->put('ministers/{id}','MinistersController@update');
 
+$router->put('ministers/status/{id}', 'MinistersController@changeStatus');
+
 
 //Baptism Routes
 $router->get('baptism','BaptismController@index');

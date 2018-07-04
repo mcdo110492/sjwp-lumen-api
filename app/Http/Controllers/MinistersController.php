@@ -92,4 +92,39 @@ class MinistersController extends Controller
 
         return response()->json(['isUpdated' => true],200);
     }
+
+
+    public function changeStatus($id){
+
+        $this->validate($this->requests, [
+            'id' => 'required|integer',
+            'active' => 'required|numeric'
+        ]);
+        
+        $getCurrentActiveQuery = Ministers::where('active','=',1);
+
+        $count = $getCurrentActiveQuery->count();
+        //Check if there is a current active minister
+        if($count > 0){
+          $getCurrentActive = $getCurrentActiveQuery->get()->first();
+
+          //Change the active status to 0 or inactive
+          $currentActive = ['active' => 0];
+
+          //Get the current id
+          $currentActiveId = $getCurrentActive->id;
+
+          //Update the current active
+          $this->model->update($currentActive, $currentActiveId);
+        }
+
+        
+
+        $data = ['active' => $this->requests->input('active')];
+
+        $this->model->update($data, $id);
+
+        return response()->json(['isStatusChanged' => true],200);
+
+    }
 }
